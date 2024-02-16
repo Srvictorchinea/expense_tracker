@@ -31,12 +31,24 @@ class _NewExpenseState extends State<NewExpense> {
   void _sumitExpenseData() {
     final enteredAmount = double.tryParse(_amountController.text);
     final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
-    if(_titleController.text.trim().isEmpty || amountIsInvalid || _seletedDate == null) {
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _seletedDate == null) {
       showDialog(
-        context: context, 
+        context: context,
         builder: (contx) => AlertDialog(
-          Title: const Text('por aqui voy')
-        ) ,
+          title: const Text('Invalid input'),
+          content: const Text(
+              'Please make sure a valid title, amount, date and category was entered.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(contx);
+              },
+              child: const Text('Okay'),
+            ),
+          ],
+        ),
       );
     }
   }
@@ -102,23 +114,24 @@ class _NewExpenseState extends State<NewExpense> {
             children: [
               DropdownButton(
                   value: _seletedCategory,
-                  items: Category.values.map(
-                    (category) => DropdownMenuItem(
-                      value: category,
-                      child: Text(
-                        category.name.toUpperCase(),
-                      ),
-                    ),
-                  ).toList(),
-                  onChanged: (value){
+                  items: Category.values
+                      .map(
+                        (category) => DropdownMenuItem(
+                          value: category,
+                          child: Text(
+                            category.name.toUpperCase(),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
                     if (value == null) {
                       return;
                     }
                     setState(() {
                       _seletedCategory = value;
                     });
-                  } 
-              ),
+                  }),
               const Spacer(),
               TextButton(
                 onPressed: () {
