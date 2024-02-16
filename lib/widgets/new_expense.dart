@@ -12,8 +12,8 @@ class _NewExpenseState extends State<NewExpense> {
   //Controllers
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
-
   DateTime? _seletedDate;
+  Category _seletedCategory = Category.leisure;
 
   void _presentDatePicker() async {
     final now = DateTime.now();
@@ -68,15 +68,45 @@ class _NewExpenseState extends State<NewExpense> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(_seletedDate == null ? 'No date selected' : formatter.format(_seletedDate!),),
-                    IconButton(onPressed: _presentDatePicker, icon: Icon(Icons.calendar_month),),
+                    Text(
+                      _seletedDate == null
+                          ? 'No date selected'
+                          : formatter.format(_seletedDate!),
+                    ),
+                    IconButton(
+                      onPressed: _presentDatePicker,
+                      icon: Icon(Icons.calendar_month),
+                    ),
                   ],
                 ),
               )
             ],
           ),
+          const SizedBox(
+            height: 16,
+          ),
           Row(
             children: [
+              DropdownButton(
+                  value: _seletedCategory,
+                  items: Category.values.map(
+                    (category) => DropdownMenuItem(
+                      value: category,
+                      child: Text(
+                        category.name.toUpperCase(),
+                      ),
+                    ),
+                  ).toList(),
+                  onChanged: (value){
+                    if (value == null) {
+                      return;
+                    }
+                    setState(() {
+                      _seletedCategory = value;
+                    });
+                  } 
+              ),
+              const Spacer(),
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -88,6 +118,7 @@ class _NewExpenseState extends State<NewExpense> {
                   print(_titleController.text);
                   print(_amountController.text);
                   print(_seletedDate);
+                  print(_seletedCategory);
                 },
                 child: const Text('Save Expense'),
               ),
