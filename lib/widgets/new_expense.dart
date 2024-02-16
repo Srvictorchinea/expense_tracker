@@ -11,7 +11,7 @@ class _NewExpenseState extends State<NewExpense> {
 
   var _enteredTitle = '';
 
-  void _daveTitleInput(String inputValue) {
+  void _saveTitleInput(String inputValue) {
     _enteredTitle = inputValue;
   }
   @override
