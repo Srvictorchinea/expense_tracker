@@ -20,16 +20,19 @@ class _NewExpenseState extends State<NewExpense> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            const TextField(
+            TextField(
+              onChanged: _saveTitleInput,
               maxLength: 50,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 label: Text('Title'),
               ),
             ),
             Row(
               children: [
                 ElevatedButton(
-                onPressed: () {}, 
+                onPressed: () {
+                  print(_enteredTitle);
+                }, 
                 child: const Text('Save Expense'),
                 ),
               ],
