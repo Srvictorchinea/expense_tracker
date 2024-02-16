@@ -8,40 +8,55 @@ class NewExpense extends StatefulWidget {
 }
 
 class _NewExpenseState extends State<NewExpense> {
-
+  //Controllers
   final _titleController = TextEditingController();
-
+  final _amountController = TextEditingController();
   @override
   void dispose() {
     _titleController.dispose();
+    _amountController.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            TextField(
-              controller: _titleController,
-              maxLength: 50,
-              decoration: const InputDecoration(
-                label: Text('Title'),
-              ),
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          TextField(
+            controller: _titleController,
+            maxLength: 50,
+            decoration: const InputDecoration(
+              label: Text('Title'),
             ),
-            Row(
-              children: [
-                ElevatedButton(
+          ),
+          TextField(
+            controller: _amountController,
+            maxLength: 9,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.euro),
+              label: Text('Amount'),
+            ),
+          ),
+          Row(
+            children: [
+              TextButton(
+                onPressed: () {},
+                child: const Text('Cancel'),
+              ),
+              ElevatedButton(
                 onPressed: () {
                   print(_titleController.text);
-                }, 
+                  print(_amountController.text);
+                },
                 child: const Text('Save Expense'),
-                ),
-              ],
-            )
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
