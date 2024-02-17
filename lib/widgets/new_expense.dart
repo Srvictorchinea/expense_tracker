@@ -1,5 +1,6 @@
 import 'package:expense_tracker/models/expense.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class NewExpense extends StatefulWidget {
   const NewExpense({super.key});
@@ -51,6 +52,7 @@ class _NewExpenseState extends State<NewExpense> {
         ),
       );
     }
+    return;
   }
 
   @override
@@ -78,7 +80,12 @@ class _NewExpenseState extends State<NewExpense> {
               Expanded(
                 child: TextField(
                   controller: _amountController,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp(r'^\d+\.?\d{0,2}'),
+                    ),
+                  ],
                   decoration: const InputDecoration(
                     prefix: Text('€ '),
                     label: Text('Amount'),
@@ -140,12 +147,7 @@ class _NewExpenseState extends State<NewExpense> {
                 child: const Text('Cancel'),
               ),
               ElevatedButton(
-                onPressed: () {
-                  print(_titleController.text);
-                  print(_amountController.text);
-                  print(_seletedDate);
-                  print(_seletedCategory);
-                },
+                onPressed: _sumitExpenseData,
                 child: const Text('Save Expense'),
               ),
             ],
