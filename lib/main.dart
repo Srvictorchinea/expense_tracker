@@ -1,13 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/widgets/expenses.dart';
 
-var kColorScheme =
-    ColorScheme.fromSeed(seedColor: const Color.fromARGB(245, 244, 244, 244));
-
+var kColorScheme = ColorScheme.fromSeed(
+  seedColor: const Color.fromARGB(245, 244, 244, 244),
+);
+var kDarkColorScheme = ColorScheme.fromSeed(
+  brightness: Brightness.dark,
+  seedColor: const Color.fromARGB(67, 244, 244, 244),
+);
 void main() {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
+      darkTheme: ThemeData.dark().copyWith(
+        colorScheme: kDarkColorScheme,
+        cardTheme: const CardTheme().copyWith(
+          color: kDarkColorScheme.secondaryContainer,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
+        ),
+         elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kDarkColorScheme.primaryContainer,
+            foregroundColor: kDarkColorScheme.onPrimaryContainer
+          ),
+        ),
+      ),
       theme: ThemeData().copyWith(
         colorScheme: kColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
@@ -33,6 +53,7 @@ void main() {
                   fontSize: 16),
             ),
       ),
+      themeMode: ThemeMode.system,
       home: const Expenses(),
     ),
   );
